@@ -25,11 +25,13 @@ functions:
     handler: src/handlers/index.getProductById
     events:
       - http:
-          path: getProductById
+          path: /products/{productId}
           method: get
+          cors: true
   getProductsList:
     handler: src/handlers/index.getProductsList
     events:
       - http:
-          path: getProductsList
+          path: products
           method: get
+          cors: true
