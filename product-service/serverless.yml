@@ -1,0 +1,29 @@
+service: product-service
+
+frameworkVersion: '3'
+
+plugins:
+  - serverless-webpack # serverless webpack plugin
+
+package:
+  individually: true # to package functions individually. You can toggle this and check the difference webpack generates
+
+custom:
+  webpack: # serverless-webpack plugin options
+    webpackConfig: webpack.config.js # Name of webpack configuration file
+    includeModules: true # Node modules configuration for packaging
+    packager: 'npm' # Packager that will be used to package your external modules
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: eu-west-1
+  stage: dev
+
+functions:
+  hello:
+    handler: src/handler.hello
+    events:
+      - http:
+          path: hello
+          method: get
