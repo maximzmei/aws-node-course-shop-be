@@ -21,9 +21,15 @@ provider:
   stage: dev
 
 functions:
-  hello:
-    handler: src/handler.hello
+  getProductById:
+    handler: src/handlers/index.getProductById
     events:
       - http:
-          path: hello
+          path: getProductById
+          method: get
+  getProductsList:
+    handler: src/handlers/index.getProductsList
+    events:
+      - http:
+          path: getProductsList
           method: get
