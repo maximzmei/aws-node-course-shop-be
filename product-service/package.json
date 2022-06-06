@@ -16,6 +16,7 @@
   "scripts": {
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "test": "jest"
+    "test": "jest",
+    "deploy": "sls deploy"
   }
 }
