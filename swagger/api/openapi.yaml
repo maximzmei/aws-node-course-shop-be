@@ -1,0 +1,135 @@
+openapi: 3.0.1
+info:
+  title: product-service
+  description: defaultDescription
+  version: '0.1'
+servers:
+  - url: https://vj89xervo4.execute-api.eu-west-1.amazonaws.com
+paths:
+  /dev/products/{productId}:
+    get:
+      description: Auto generated using Swagger Inspector
+      operationId: devProductsProductIdGET
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+              examples:
+                '0':
+                  value: |-
+                    {
+                      "count": 1,
+                      "description": "Iphone 5s",
+                      "id": "7567ec4b-b10c-48c5-9345-fc73c48a80aa",
+                      "price": 400,
+                      "title": "Iphone 5s"
+                    }
+      servers:
+        - url: https://vj89xervo4.execute-api.eu-west-1.amazonaws.com
+      x-swagger-router-controller: Default
+    servers:
+      - url: https://vj89xervo4.execute-api.eu-west-1.amazonaws.com
+  /dev/products:
+    get:
+      description: Auto generated using Swagger Inspector
+      operationId: devProductsGET
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+                example: {}
+                x-content-type: application/json
+              examples:
+                '0':
+                  value: |-
+                    [
+                      {
+                        "count": 1,
+                        "description": "Iphone 5s",
+                        "id": "7567ec4b-b10c-48c5-9345-fc73c48a80aa",
+                        "price": 400,
+                        "title": "Iphone 5s"
+                      },
+                      {
+                        "count": 2,
+                        "description": "Iphone 6s",
+                        "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a0",
+                        "price": 500,
+                        "title": "Iphone 6s"
+                      },
+                      {
+                        "count": 3,
+                        "description": "Macbook Pro",
+                        "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a2",
+                        "price": 2000,
+                        "title": "Macbook Pro"
+                      },
+                      {
+                        "count": 4,
+                        "description": "Macbook Air",
+                        "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a1",
+                        "price": 1500,
+                        "title": "Macbook Air"
+                      },
+                      {
+                        "count": 5,
+                        "description": "Iphone X",
+                        "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a3",
+                        "price": 800,
+                        "title": "Iphone X"
+                      },
+                      {
+                        "count": 6,
+                        "description": "Iphone 13 Pro",
+                        "id": "7567ec4b-b10c-48c5-9345-fc73348a80a1",
+                        "price": 1200,
+                        "title": "Iphone 13 Pro"
+                      },
+                      {
+                        "count": 7,
+                        "description": "Iphone 12",
+                        "id": "7567ec4b-b10c-48c5-9445-fc73c48a80a2",
+                        "price": 1050,
+                        "title": "Iphone 12"
+                      },
+                      {
+                        "count": 8,
+                        "description": "Iphone 11",
+                        "id": "7567ec4b-b10c-45c5-9345-fc73c48a80a1",
+                        "price": 900,
+                        "title": "Iphone 11"
+                      }
+                    ]
+      servers:
+        - url: https://vj89xervo4.execute-api.eu-west-1.amazonaws.com
+      x-swagger-router-controller: Default
+    servers:
+      - url: https://vj89xervo4.execute-api.eu-west-1.amazonaws.com
+components:
+  schemas:
+    inline_response_200:
+      type: object
+      properties:
+        price:
+          type: integer
+        count:
+          type: integer
+        description:
+          type: string
+        id:
+          type: string
+        title:
+          type: string
+      example:
+        price: 0
+        count: 6
+        description: description
+        id: id
+        title: title
