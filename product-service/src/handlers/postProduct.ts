@@ -40,6 +40,7 @@ export const postProduct = async (event: any): Promise<any> => {
       body: 'Successfully added',
     };
   } catch (error) {
+    await client.query('rollback');
     console.error('Internal server error', error);
     return {
       statusCode: 500,
