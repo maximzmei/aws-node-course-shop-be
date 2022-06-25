@@ -1,12 +1,24 @@
 'use strict';
 import { dbOptions, headers } from '../config/constants';
 import { Client } from 'pg';
+import { yupPostProductObject } from '../libs/validate';
 
-export const postProduct = async (event: any) => {
+export const postProduct = async (event: any): Promise<any> => {
+  const isValid = await yupPostProductObject.isValid(event.body);
+
+  if (!isValid) {
+    console.error('Provided product data is not valid');
+    return {
+      statusCode: 400,
+      headers,
+      body: 'Provided product data is not valid',
+    };
+  }
+
   const { title, description, price, count } = JSON.parse(event.body);
 
   console.log(
-    `POST request: {title: ${title}, description: ${description}, price: ${price}, count: ${count}`
+    `POST product: {title: ${title}, description: ${description}, price: ${price}, count: ${count}`
   );
 
   const client = new Client(dbOptions);

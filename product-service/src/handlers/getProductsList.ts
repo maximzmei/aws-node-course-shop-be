@@ -10,6 +10,9 @@ export const getProductsList = async () => {
     const { rows } = await client.query(
       `SELECT p.id, p.description, p.price, p.title, s.count FROM products p LEFT JOIN stocks s on p.id=s.product_id`
     );
+
+    console.log(`GET: getProductsList: ${rows}`);
+
     return {
       statusCode: 200,
       headers,

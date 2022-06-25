@@ -2,12 +2,14 @@
 import { dbOptions, headers } from '../config/constants';
 import { Client } from 'pg';
 
-export const getProductById = async (event: any) => {
+export const getProductById = async (event: any): Promise<any> => {
   const client = new Client(dbOptions);
 
   try {
     await client.connect();
     const productId = event.pathParameters.productId;
+
+    console.log(`GET: getProductByID ${productId}`);
 
     const { rows } = await client.query(
       `SELECT p.id, p.description, p.price, p.title, s.count FROM products p LEFT JOIN stocks s on p.id=s.product_id`
