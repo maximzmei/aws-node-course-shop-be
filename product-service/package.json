@@ -1,6 +1,5 @@
 {
-  "name": "shop-be",
-  "main": "serverless.ts",
+  "name": "product-service",
   "devDependencies": {
     "@types/jest": "^28.1.1",
     "@types/pg": "^8.6.5",
