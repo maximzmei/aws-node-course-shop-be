@@ -19,7 +19,7 @@ provider:
   runtime: nodejs14.x
   region: eu-west-1
   stage: dev
-
+  environment: ${file(env.json)}
 functions:
   getProductById:
     handler: src/handlers/index.getProductById
@@ -27,11 +27,15 @@ functions:
       - http:
           path: /products/{productId}
           method: get
-          cors: true
   getProductsList:
     handler: src/handlers/index.getProductsList
     events:
       - http:
           path: products
           method: get
-          cors: true
+  postProduct:
+    handler: src/handlers/index.postProduct
+    events:
+      - http:
+          path: products
+          method: post
