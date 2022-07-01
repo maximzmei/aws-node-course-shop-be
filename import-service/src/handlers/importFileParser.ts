@@ -17,7 +17,7 @@ export const importFileParser = async (event: any): Promise<any> => {
           Key: key,
         })
           .createReadStream()
-          .pipe(csv(['title', 'description', 'price', 'count']))
+          .pipe(csv())
           .on('data', (data: any) => results.push(data))
           .on('end', async () => {
             console.log(JSON.stringify(results));
@@ -26,7 +26,7 @@ export const importFileParser = async (event: any): Promise<any> => {
               .copyObject({
                 Bucket: BUCKET,
                 CopySource: `${BUCKET}/${key}`,
-                Key: key.replace('uploaded', 'result-folder'),
+                Key: key.replace('uploaded', 'parsed'),
               })
               .promise();
 
