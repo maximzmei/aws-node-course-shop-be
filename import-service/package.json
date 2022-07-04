@@ -1,5 +1,10 @@
 {
-  "name": "product-service",
+  "name": "import-service",
+  "dependencies": {
+    "aws-sdk": "^2.1165.0",
+    "csv": "^6.1.4",
+    "csv-parser": "^3.0.0"
+  },
   "devDependencies": {
     "@types/jest": "^28.1.1",
     "@types/pg": "^8.6.5",
@@ -22,9 +27,5 @@
     "lint:fix": "eslint --fix",
     "test": "jest",
     "deploy": "sls deploy"
-  },
-  "dependencies": {
-    "pg": "^8.7.3",
-    "yup": "^0.32.11"
   }
 }
