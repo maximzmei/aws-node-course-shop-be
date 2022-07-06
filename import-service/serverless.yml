@@ -51,3 +51,5 @@ functions:
           rules:
             - prefix: uploaded/
           existing: true
+  catalogBatchProcess:
+    handler: src/handlers/index.catalogBatchProcess
