@@ -67,7 +67,16 @@ resources:
         Protocol: email
         TopicArn:
           Ref: SNSTopic
-
+    SNSSubscriptionFiltered:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Endpoint: maximzmei1@gmail.com
+        Protocol: email
+        TopicArn:
+          Ref: SNSTopic
+        FilterPolicy:
+          title:
+            - Iphone
   Outputs:
     SQSQueueArn:
       Value:

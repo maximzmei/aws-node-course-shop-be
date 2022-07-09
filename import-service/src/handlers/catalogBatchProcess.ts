@@ -5,7 +5,6 @@ import { dbOptions } from '../utils/constants';
 
 export const catalogBatchProcess = async (event: any): Promise<any> => {
   const client = new Client(dbOptions);
-  await client.connect();
   const sns = new AWS.SNS({ region: 'eu-west-1' });
 
   const dataMessageQueue = await event.Records.map(({ body }: any) => body);
@@ -13,6 +12,8 @@ export const catalogBatchProcess = async (event: any): Promise<any> => {
   console.log('dataMessageQueue', JSON.parse(dataMessageQueue));
 
   try {
+    await client.connect();
+
     for (let dataMessage of dataMessageQueue) {
       const { price, title, description, count } = JSON.parse(dataMessage);
       console.log(
