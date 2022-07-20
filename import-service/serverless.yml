@@ -77,6 +77,18 @@ resources:
         FilterPolicy:
           title:
             - Iphone
+
+    GatewayResponseDefault4XX:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+          gatewayresponse.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+
   Outputs:
     SQSQueueArn:
       Value:
@@ -96,6 +108,13 @@ functions:
             parameters:
               querystrings:
                 name: true
+          cors: true
+          authorizer:
+            name: basicTokenAuthorizer
+            arn: arn:aws:lambda:eu-west-1:345184751867:function:authorization-service-dev-basicAuthorizer
+            resultTtlInSeconds: 0
+            identitySource: method.request.header.Authorization
+            type: token
   importFileParser:
     handler: src/handlers/index.importFileParser
     events:
