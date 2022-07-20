@@ -19,6 +19,16 @@ provider:
   runtime: nodejs14.x
   region: eu-west-1
   stage: dev
+  environment:
+    SQS_URL:
+      Ref: SQSQueue
+    SNS_ARN:
+      Ref: SNSTopic
+    PG_HOST: ${file(env.json):PG_HOST}
+    PG_PORT: ${file(env.json):PG_PORT}
+    PG_DATABASE: ${file(env.json):PG_DATABASE}
+    PG_USERNAME: ${file(env.json):PG_USERNAME}
+    PG_PASSWORD: ${file(env.json):PG_PASSWORD}
   iamRoleStatements:
     - Effect: 'Allow'
       Action:
@@ -30,6 +40,62 @@ provider:
         - 's3:*'
       Resource:
         - 'arn:aws:s3:::import-service-shop-be/*'
+    - Effect: 'Allow'
+      Action:
+        - 'sqs:*'
+      Resource: !GetAtt SQSQueue.Arn
+    - Effect: 'Allow'
+      Action:
+        - 'sns:*'
+      Resource:
+        Ref: SNSTopic
+
+resources:
+  Resources:
+    SQSQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: catalogItemsQueue
+    SNSTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: createProductTopic
+    SNSSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Endpoint: maximzmei@gmail.com
+        Protocol: email
+        TopicArn:
+          Ref: SNSTopic
+    SNSSubscriptionFiltered:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Endpoint: maximzmei1@gmail.com
+        Protocol: email
+        TopicArn:
+          Ref: SNSTopic
+        FilterPolicy:
+          title:
+            - Iphone
+
+    GatewayResponseDefault4XX:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+          gatewayresponse.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+
+  Outputs:
+    SQSQueueArn:
+      Value:
+        Fn::GetAtt: [SQSQueue, Arn]
+    SQSQueue:
+      Value:
+        Ref: SQSQueue
 
 functions:
   importProductsFile:
@@ -42,6 +108,13 @@ functions:
             parameters:
               querystrings:
                 name: true
+          cors: true
+          authorizer:
+            name: basicTokenAuthorizer
+            arn: arn:aws:lambda:eu-west-1:345184751867:function:authorization-service-dev-basicAuthorizer
+            resultTtlInSeconds: 0
+            identitySource: method.request.header.Authorization
+            type: token
   importFileParser:
     handler: src/handlers/index.importFileParser
     events:
@@ -51,3 +124,9 @@ functions:
           rules:
             - prefix: uploaded/
           existing: true
+  catalogBatchProcess:
+    handler: src/handlers/index.catalogBatchProcess
+    events:
+      - sqs:
+          batchSize: 5
+          arn: !GetAtt SQSQueue.Arn
