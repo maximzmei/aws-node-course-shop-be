@@ -1,21 +1,17 @@
 import express from 'express';
 import axios from 'axios';
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-console.log(`PORT===>`, PORT);
-
+app.use(cors());
 app.use(express.json());
 
 app.all('/*', (req, res) => {
-  console.log('originalURL===>', req.originalUrl);
-  console.log('method===>', req.method);
-  console.log('body===>', req.body);
-
   const recipient = req.originalUrl.split('/')[1];
   console.log('recipient', recipient);
 
