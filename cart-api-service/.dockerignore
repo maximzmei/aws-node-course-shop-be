@@ -1,0 +1,8 @@
+# we don't need to create an image inside a docker container.
+Dockerfile 
+# we don't need to ignore smth in docker container because we aren't building anything
+.dockerignore
+# use npm ci instead
+node_modules
+# we create dist folder already, don't need to copy it from local folder
+dist

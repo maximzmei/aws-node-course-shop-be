@@ -1,11 +1,6 @@
 {
-  "name": "import-service",
-  "dependencies": {
-    "aws-sdk": "^2.1165.0",
-    "csv": "^6.1.4",
-    "csv-parser": "^3.0.0",
-    "pg": "^8.7.3"
-  },
+  "name": "authorization-service",
+  "dependencies": {},
   "devDependencies": {
     "@types/jest": "^28.1.1",
     "@types/pg": "^8.6.5",
@@ -15,6 +10,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^28.1.0",
     "prettier": "^2.6.2",
+    "serverless-dotenv-plugin": "^4.0.1",
     "serverless-webpack": "^5.7.1",
     "ts-jest": "^28.0.4",
     "ts-loader": "^9.3.0",
